@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template,redirect, url_for
 import requests
-
+from gtts import gTTS
 app = Flask(__name__)
 
 
@@ -36,7 +36,14 @@ def my_form_post():
             file.write(audio.content)
         return render_template("index_final.html",filename = filename,text = text_return)
     else:
-        return render_template("index_final.html")
+        text = request.form['text']
+        if text == "":
+            return render_template("index_final.html")
+        tts = gTTS(text)
+        filename = "a"+ str(range(1000000,10000000))+".mp3"
+        file_save = "static/"+filename
+        tts.save(file_save)
+        return render_template("index_final.html",filename = filename,text= text)
 @app.route("/mp3/<filename>")
 def stream_mp3(filename):
     return redirect(url_for('static', filename=filename), code=301)
