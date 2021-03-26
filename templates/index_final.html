@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <title>VoiceAI</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="header d-flex">
+            <div class="container d-flex">
+                <div class="header-logo">
+                    <i class="fas fa-microphone-alt"></i>
+                    VoiceAI
+                </div>
+                <div>
+                    <ul>
+                        <li class="icon-item" style="margin-right: 0 !important;"><i class="fab fa-facebook-square"></i>
+                        </li>
+                        <li class="icon-item"><i class="fab fa-instagram"></i></li>
+                        <li class="icon-item"><i class="fas fa-envelope"></i></li>
+                        <li class="icon-item"><i class="fab fa-twitter"></i></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="footer d-flex">
+            <div class="container">
+                <ul>
+                    <li class="fromCenter">
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="fromCenter">
+                        <a href="#">Convert text to speech</a>
+                    </li>
+                    <li class="fromCenter">
+                        <a href="#">About us</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <form method="post">
+{#            <div class="text-box" name="main_box">#}
+                <h5>Copy and paste your text here:</h5>
+                <textarea name="text" placeholder=" " cols="30" rows="20"></textarea>
+{#            </div>#}
+            <div class="action-box">
+                <button name="submit_en" value="submit_en">Create English audio file</button>
+                <button name="submit_vi" value="submit_vi">Create Vietnamese audio file</button>
+            </div>
+            <div class="result-box">
+                <h5>Result:</h5>
+            </div>
+                </form>
+            {% if filename %}
+    <div>
+    <h2> Chuyển Chữ Thành Giọng Nói Thành Công Nhấn Play để nghe</h2>
+    <h2> Câu của bạn : {{ text }} </h2>
+    <audio controls>
+        <source src= "{{ url_for('stream_mp3', filename=filename) }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+    </div>
+    <div>
+    <a href="{{ url_for('stream_mp3', filename=filename) }}" download="proposed_file_name" style="color:gray !important;">Download</a>
+    </div>
+{% endif %}
+        </div>
+    </main>
+    <footer>
+        <div>Designed by ...</div>
+    </footer>
+
+</body>
+
+<script>
+
+</script>
+
+</html>

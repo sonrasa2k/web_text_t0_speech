@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>speed to text</title>
+</head>
+<body>
+<form method="POST">
+    <input name="text">
+    <input type="submit">
+</form>
+{% if filename %}
+    <div>
+    <h2> Chuyển Chữ Thành Giọng Nói Thành Công Nhấn Play để nghe</h2>
+    <h2> Câu của bạn : {{ text }} </h2>
+    <audio controls>
+        <source src= "{{ url_for('stream_mp3', filename=filename) }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+    </div>
+    <div>
+    <a href="{{ url_for('stream_mp3', filename=filename) }}" download="proposed_file_name">Download</a>
+    </div>
+{% endif %}
+</body>
+</html>

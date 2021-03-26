@@ -1,0 +1,153 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "acumin-pro", "Acumin Pro", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  color: #666 !important;
+}
+
+.container {
+  width: 100%;
+  /* background-color: #f5f5f5; */
+  margin: auto;
+}
+
+footer {
+    /* border-top: 1px solid #ccc; */
+  bottom: 0;
+  position: fixed;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  background-color: #252525;
+  color: #fff;
+}
+
+nav.header {
+  box-shadow: 1px 2px 4px hsl(0deg 0% 54% / 20%);
+}
+
+nav.footer {
+    background-color: #252525;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.header-logo {
+  padding: 20px;
+  flex-grow: 1;
+  font: 32px/1.2 "Merienda One", Helvetica, sans-serif;
+  color: rgba(0, 0, 0, 0.7);
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1), 7px 7px 0px rgba(0, 0, 0, 0.05);
+}
+
+.icon-item {
+    float: right;
+    font-size: 20px;
+    margin: 26px 13px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.icon-item :hover {
+    color: #f08080;
+}
+
+ul {
+  flex-grow: 1;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li.fromCenter {
+  padding: 16px 20px 12px 20px;
+  /* you can change these variables to control the border */
+  --border-color: #f08080;
+  --border-width: 3px;
+  --bottom-distance: 0px; /* you can increase this */
+
+  display: inline-block;
+  background-image: linear-gradient(var(--border-color), var(--border-color));
+  background-size: 0% var(--border-width);
+  background-repeat: no-repeat;
+  transition: background-size 0.3s;
+}
+
+li:hover {
+  background-size: 85% var(--border-width);
+  cursor: pointer;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.fromCenter {
+  background-position: 50% calc(100% - var(--bottom-distance));
+}
+
+div.text-box {
+    margin-top: 50px;
+}
+
+h5 {
+    color: #252525;
+}
+
+textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: 1px 10px 20px hsl(0deg 0% 54% / 20%);
+}
+
+.action-box {
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #252525;
+    color: #fff;
+    border: 1px solid #252525;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #f08080;
+    border-color: #f08080;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 576px) {
+  .container {
+    width: 540px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    width: 720px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .container {
+    width: 960px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    width: 1140px;
+  }
+}
+
