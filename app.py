@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template,redirect, url_for
 import requests
 from gtts import gTTS
+from random import randrange
 app = Flask(__name__)
 
 
@@ -40,7 +41,8 @@ def my_form_post():
         if text == "":
             return render_template("index_final.html")
         tts = gTTS(text)
-        filename = "a"+ str(range(1000000,10000000))+".mp3"
+        random = randrange(1000000,1000000000)
+        filename = "a"+ str(random)+".mp3"
         file_save = "static/"+filename
         tts.save(file_save)
         return render_template("index_final.html",filename = filename,text= text)

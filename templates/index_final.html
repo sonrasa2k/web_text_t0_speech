@@ -73,7 +73,7 @@
     </audio>
     </div>
     <div>
-    <a href="{{ url_for('stream_mp3', filename=filename) }}" download="proposed_file_name" style="color:gray !important;">Download</a>
+    <a href="{{ url_for('stream_mp3', filename=filename) }}" download="{{ filename }}" style="color:gray !important;">Download</a>
     </div>
 {% endif %}
         </div>
