@@ -34,7 +34,7 @@ def log_in():
                 cur.execute("select * from khach_hang  where email == (?)",(emails,))
                 rows2 = cur.fetchall()
                 if passwd == rows2[0][2]:
-                    profile = {"email":rows2[0][0],"msks":rows2[0][1]}
+                    profile = {"email":rows2[0][0],"mskh":rows2[0][1]}
                     return profile
         return "Username or pass sai"
 @app.route('/signup')
