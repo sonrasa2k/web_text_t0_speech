@@ -1,25 +1,162 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>speed to text</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <title>Convert text to speech</title>
+    <style>
+        .sidenav {
+            width: 100%;
+            height: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #2a9d8f;
+            overflow: hidden;
+            transition: 0.5s;
+            margin-top: 64px;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            color: #fff;
+        }
+    </style>
 </head>
+
 <body>
-<form method="POST">
-    <input name="text">
-    <input type="submit">
-</form>
-{% if filename %}
-    <div>
-    <h2> Chuyển Chữ Thành Giọng Nói Thành Công Nhấn Play để nghe</h2>
-    <h2> Câu của bạn : {{ text }} </h2>
-    <audio controls>
+
+    <!-- <header>
+        <nav>
+            <ul>
+                <li class="header-logo"><i class="fas fa-microphone-alt"></i> VoiceAI</li>
+                <li class="header-item">Home</li>
+                <li class="header-item">Convert text to speech</li>
+                <li class="header-item">About us</li>
+            </ul>
+            <a href="./register.html">
+                <button class="btn-register">Signin/Signup for free</button>
+            </a>
+        </nav>
+    </header> -->
+
+    <header>
+        <nav>
+            <ul>
+                <li class="header-logo"><i class="fas fa-microphone-alt"></i> VoiceAI</li>
+                <li id="navMenu" class="sidenav">
+                    <ul>
+                        <li class="header-item">Home</li>
+                        <li class="header-item">Convert text to speech</li>
+                        <li class="header-item">About us</li>
+                    </ul>
+                </li>
+                <li class="header-item">Home</li>
+                <li class="header-item">Convert text to speech</li>
+                <li class="header-item">About us</li>
+            </ul>
+            <a href="./signup">
+                <button class="btn-register"><i class="fas fa-user-circle"></i> &nbsp; Signin/Signup for free</button>
+                <span class=" i-register"><i class="fas fa-user-circle"></i></span>
+            </a>
+            <button class="icon-list" style="cursor:pointer" onclick="openOrCloseNav()">&#9776;</button>
+        </nav>
+    </header>
+
+    <main>
+    <form name="form_text" method="post">
+        <div class="container">
+            <h4 style="color: #818181;">Copy and paste your text here:</h4>
+            <textarea name="text-to-speech-input" id="value"></textarea>
+        </div>
+        <div class="container">
+            <div class="flex-btn">
+                <button class="convert" name="submit_en" value="submit_en"><img src="/static/src/gb_16.png" alt="" height="30px" width="25px"  /> Convert
+                    English
+                    audio file</button>
+                <button class="convert" name="submit_vi" value="submit_vi"><img src="/static/src/vn_16.png" alt="" height="25px" /> Convert Vietnamese audio
+                    file</button>
+            </div>
+        </div>
+    </form>
+        {% if filename %}
+        <div class="container">
+            <h4 style="color: #818181">Your audio file:</h4>
+            <div class="d-flex">
+                <audio controls>
         <source src= "{{ url_for('stream_mp3', filename=filename) }}" type="audio/mpeg">
     Your browser does not support the audio element.
     </audio>
-    </div>
-    <div>
-    <a href="{{ url_for('stream_mp3', filename=filename) }}" download="proposed_file_name">Download</a>
-    </div>
-{% endif %}
+                <button class="download"><i class="fas fa-download"></i> Download this audio file</button>
+            </div>
+        </div>
+        {% endif %}
+    </main>
+
+    <footer>
+        <div class="flex-container">
+            <div class="footer-outer">
+                <div class="footer-left">
+                    <h4 class="footer-title">About us</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, at eveniet quis vel soluta fugit
+                        aliquid! Repellendus accusantium dolores commodi labore ipsa molestiae a minima aspernatur vel
+                        asperiores, magni rem.</p>
+                    <p class="address"><i class="fas fa-map-marker-alt"></i> 123/45 Lorem street, Lorem district, HCM
+                        city, Vietnam.</p>
+                    <ul>
+                        <li class="icon-item">
+                            <div><a href="#"><i class="fab fa-facebook-f text-facebook"></i></a></div>
+                        </li>
+                        <li class="icon-item">
+                            <div><a href="#"><i class="fab fa-instagram text-instagram"></i></a></div>
+                        </li>
+                        <li class="icon-item">
+                            <div><a href="#"><i class="fab fa-twitter text-twitter"></i></a></div>
+                        </li>
+                        <li class="icon-item">
+                            <div><a href="#"><i class="fas fa-at text-email"></i></a></div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer-right">
+                    <h4 class="footer-title">Contact us</h4>
+                    <p><i class="fas fa-phone-alt"></i> Hotline: 01632555111</p>
+                    <p><i class="fas fa-phone-alt"></i> Mr Son: 0987123123</p>
+                    <p><i class="fas fa-phone-alt"></i> Mr Trung: 0937444000</p>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                <h4><i class="fas fa-check-circle text-check"></i> Designed by Tpvan5521</h4>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navMenu = document.getElementById("navMenu")
+
+        function openOrCloseNav() {
+            if (navMenu.offsetHeight === 0) {
+                navMenu.style.height = "144px"
+                navMenu.style.boxShadow = "4px 4px 3px rgba(0, 0, 0, 0.1)"
+            } else {
+                navMenu.style.height = "0"
+            }
+        }
+    </script>
+
 </body>
+
 </html>

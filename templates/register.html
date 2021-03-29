@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+  <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <title>Login</title>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div class="register-form">
+    <form action="/login" method="post">
+      <label for="username-login"><b>E,ail</b></label>
+      <input type="text" placeholder="Email" name="email">
+      <label for="password-login"><b>Password</b></label>
+      <input type="password" placeholder="Password" name="psw">
+      <button class="button">Signin</button>
+    </form>
+    <h4>Don't have any account?</h4>
+    <button class="button" onclick="document.getElementById('id01').style.display='block'" style="background-color: #818181;">Sign
+      Up</button>
+    <a href="./index.html">Back</a>
+  </div>
+
+  <div id="id01" class="modal">
+    <div class="register-form">
+      <form action="/addnew" method="POST">
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" required>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+        <label for="pswr"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="pswr" required>
+        <button class="button">Sign Up</button>
+      </form>
+      <h4>Already have an account?</h4>
+      <button class="button" onclick="document.getElementById('id01').style.display='none'" style="background-color: #818181;">Sign
+        In</button>
+      <a href="./index.html">Back</a>
+    </div>
+  </div>
+
+</body>
+
+</html>
