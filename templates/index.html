@@ -98,7 +98,7 @@
         <source src= "{{ url_for('stream_mp3', filename=filename) }}" type="audio/mpeg">
     Your browser does not support the audio element.
     </audio>
-                <button class="download"><i class="fas fa-download"></i> Download this audio file</button>
+                <button class="download"><i class="fas fa-download"></i><a href="{{ url_for('stream_mp3', filename=filename) }}" download="{{ filename }}" style="color: white"> Download this audio file</a></button>
             </div>
         </div>
         {% endif %}

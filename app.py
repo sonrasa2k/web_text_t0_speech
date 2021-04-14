@@ -4,8 +4,104 @@ from gtts import gTTS
 from random import randrange
 import sqlite3
 app = Flask(__name__)
-
+import hashlib
 from datetime import datetime
+import urlquote
+
+VNPAY_HASH_SECRET_KEY = 'OBRPXNCQDNZTEXUXXJEDZOJOQJOVNTNZ'
+
+
+
+# Hàm tạo URL thanh toán
+class vnpay:
+    requestData = {}
+    responseData = {}
+
+    def get_payment_url(self, vnpay_payment_url, secret_key):
+        inputData = sorted(self.requestData.items())
+        queryString = ''
+        hasData = ''
+        seq = 0
+        for key, val in inputData:
+            if seq == 1:
+                queryString = queryString + "&" + key + '=' + urlquote(val)
+                hasData = hasData + "&" + str(key) + '=' + str(val)
+            else:
+                seq = 1
+                queryString = key + '=' + urlquote(val)
+                hasData = str(key) + '=' + str(val)
+
+        hashValue = self.__md5(secret_key + hasData)
+        return vnpay_payment_url + "?" + queryString + '&vnp_SecureHashType=SHA256&vnp_SecureHash=' + hashValue
+
+    def validate_response(self, secret_key):
+        vnp_SecureHash = self.responseData['vnp_SecureHash']
+        # Remove hash params
+        if 'vnp_SecureHash' in self.responseData.keys():
+            self.responseData.pop('vnp_SecureHash')
+
+        if 'vnp_SecureHashType' in self.responseData.keys():
+            self.responseData.pop('vnp_SecureHashType')
+        # self.responseData.pop('vnp_SecureHash', None)
+        # self.responseData.pop('vnp_SecureHashType',None)
+        inputData = sorted(self.responseData.items())
+        hasData = ''
+        seq = 0
+
+        for key, val in inputData:
+            if str(key).startswith('vnp_'):
+                if seq == 1:
+                    hasData = hasData + "&" + str(key) + '=' + str(val)
+                else:
+                    seq = 1
+                    hasData = str(key) + '=' + str(val)
+        hashValue = self.__md5(secret_key + hasData)
+
+        print(
+            'Validate debug, HashData:' + secret_key + hasData + "\n HashValue:" + hashValue + "\nInputHash:" + vnp_SecureHash)
+
+        return vnp_SecureHash == hashValue
+
+    def __md5(self, input):
+        byteInput = input.encode('utf-8')
+        return hashlib.md5(byteInput).hexdigest()
+def payment_ipn(request):
+    inputData = request.GET
+    if inputData:
+        vnp = vnpay()
+        vnp.responseData = inputData.dict()
+        order_id = inputData['vnp_TxnRef']
+        amount = inputData['vnp_Amount']
+        order_desc = inputData['vnp_OrderInfo']
+        vnp_TransactionNo = inputData['vnp_TransactionNo']
+        vnp_ResponseCode = inputData['vnp_ResponseCode']
+        vnp_TmnCode = inputData['vnp_TmnCode']
+        vnp_PayDate = inputData['vnp_PayDate']
+        vnp_BankCode = inputData['vnp_BankCode']
+        vnp_CardType = inputData['vnp_CardType']
+        if vnp.validate_response(VNPAY_HASH_SECRET_KEY):
+            # Check & Update Order Status in your Database
+            # Your code here
+            firstTimeUpdate = False
+            if firstTimeUpdate:
+                if vnp_ResponseCode == '00':
+                    print('Payment Success. Your code implement here')
+                else:
+                    print('Payment Error. Your code implement here')
+
+                # Return VNPAY: Merchant update success
+                result = {'RspCode': '00', 'Message': 'Confirm Success'}
+            else:
+                # Already Update
+                result = {'RspCode': '02', 'Message': 'Order Already Update'}
+
+        else:
+            # Invalid Signature
+            result = {'RspCode': '97', 'Message': 'Invalid Signature'}
+    else:
+        result = {'RspCode': '99', 'Message': 'Invalid request'}
+
+    return result
 
 # datetime object containing current date and time
 def get_key():
